@@ -1,3 +1,15 @@
+
+This is my ([harriott](https://github.com/harriott)) fork of **[jgm/pandoc-templates](https://github.com/jgm/pandoc-templates)** (as jgm recommends - see below).
+
+Herein I am able to make changes to [pandoc templates](http://johnmacfarlane.net/pandoc/README.html#templates) that can be easily merged with jgm's updates.
+
+The contents of this repository should be copied to `C:\Users\<you>\AppData\Roaming\pandoc\templates`. I handle this with a symbolic link:
+
+    console as Administrator for:
+    cd C:\Users\jo\AppData\Roaming  then  md pandoc  then
+	mklink /D pandoc\templates E:\Dropbox\JH\IT_stack\pandoc-templates
+
+## jgm's original README
 The [pandoc-templates] repository contains default templates for [pandoc].
 
 If you use custom templates, we recommend forking this

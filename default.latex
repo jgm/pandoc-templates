@@ -1,3 +1,5 @@
+% My changes are marked: JH
+
 \PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
@@ -5,7 +7,7 @@ $if(colorlinks)$
 $endif$$if(dir)$$if(latex-dir-rtl)$
 \PassOptionsToPackage{RTLdocument}{bidi}
 $endif$$endif$%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[$if(fontsize)$$fontsize$,$else$12pt,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$} %-added 12pt as default font -JH
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
@@ -159,7 +161,10 @@ $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 $if(geometry)$
-\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+  \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$else$ %-JH clause
+  \usepackage[a4paper,hmargin=1cm,top=1cm,bottom=17mm]{geometry}
+  % - page numbers print to Epson Stylus DX7400
 $endif$
 $if(beamer)$
 \newif\ifbibliography
@@ -371,7 +376,7 @@ $if(colorlinks)$
 \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
 $endif$
 \setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
+\tableofcontents* %JH removing ToC title
 }
 $endif$
 $endif$
