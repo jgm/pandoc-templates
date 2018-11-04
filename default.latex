@@ -1,4 +1,4 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{unicode=true$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref} % options for packages loaded elsewhere
 \PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
@@ -91,6 +91,9 @@ $for(fontfamilies)$
 $endfor$
 $if(mainfont)$
     \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+$if(romanfont)$
+	\setromanfont[$for(romanfontoptions)$$romanfontoptions$$sep$,$endfor$]{$romanfont$}
 $endif$
 $if(sansfont)$
     \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
