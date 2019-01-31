@@ -2,14 +2,40 @@
 \PassOptionsToPackage{hyphens}{url}
 $if(colorlinks)$
 \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
-$endif$$if(dir)$$if(latex-dir-rtl)$
+$endif$
+$if(dir)$
+$if(latex-dir-rtl)$
 \PassOptionsToPackage{RTLdocument}{bidi}
-$endif$$endif$%
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$if(beamer)$ignorenonframetext,$if(handout)$handout,$endif$$if(aspectratio)$aspectratio=$aspectratio$,$endif$$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+$endif$
+$endif$
+%
+\documentclass[
+$if(fontsize)$
+  $fontsize$,
+$endif$
+$if(lang)$
+  $babel-lang$,
+$endif$
+$if(papersize)$
+  $papersize$paper,
+$endif$
+$if(beamer)$
+  ignorenonframetext,
+$if(handout)$
+  handout,
+$endif$
+$if(aspectratio)$
+  aspectratio=$aspectratio$,
+$endif$
+$endif$
+$for(classoption)$
+  $classoption$$sep$,
+$endfor$
+]{$documentclass$}
 $if(beamer)$
 $if(background-image)$
 \usebackgroundtemplate{%
-\includegraphics[width=\paperwidth]{$background-image$}%
+  \includegraphics[width=\paperwidth]{$background-image$}%
 }
 $endif$
 \usepackage{pgfpages}
@@ -25,22 +51,22 @@ $endfor$
 \raggedbottom
 $if(section-titles)$
 \setbeamertemplate{part page}{
-\centering
-\begin{beamercolorbox}[sep=16pt,center]{part title}
-  \usebeamerfont{part title}\insertpart\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{section page}{
-\centering
-\begin{beamercolorbox}[sep=12pt,center]{part title}
-  \usebeamerfont{section title}\insertsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
 }
 \setbeamertemplate{subsection page}{
-\centering
-\begin{beamercolorbox}[sep=8pt,center]{part title}
-  \usebeamerfont{subsection title}\insertsubsection\par
-\end{beamercolorbox}
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
 }
 \AtBeginPart{
   \frame{\partpage}
@@ -70,7 +96,6 @@ $if(linestretch)$
 $endif$
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
   \usepackage[utf8]{inputenc}
@@ -85,22 +110,20 @@ $if(mathspec)$
 $else$
   \usepackage{unicode-math}
 $endif$
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-$for(fontfamilies)$
-  \newfontfamily{$fontfamilies.name$}[$fontfamilies.options$]{$fontfamilies.font$}
-$endfor$
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 $if(mainfont)$
-    \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
-$endif$
-$if(romanfont)$
-	\setromanfont[$for(romanfontoptions)$$romanfontoptions$$sep$,$endfor$]{$romanfont$}
+  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
 $endif$
 $if(sansfont)$
-    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
 $endif$
 $if(monofont)$
-    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
 $endif$
+$for(fontfamilies)$
+  \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
+$endfor$
 $if(mathfont)$
 $if(mathspec)$
   \ifxetex
@@ -152,47 +175,49 @@ $endif$
 $endif$
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
 $if(indent)$
 $else$
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
 $endif$
 $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 $endif$
-$if(colorlinks)$
 \usepackage{xcolor}
-$endif$
-\usepackage{hyperref}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
 $if(title-meta)$
-            pdftitle={$title-meta$},
+  pdftitle={$title-meta$},
 $endif$
 $if(author-meta)$
-            pdfauthor={$author-meta$},
+  pdfauthor={$author-meta$},
 $endif$
 $if(keywords)$
-            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+  pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
 $if(colorlinks)$
-            colorlinks=true,
-            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
-            filecolor=$if(filecolor)$$filecolor$$else$Maroon$endif$,
-            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
-            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+  colorlinks=true,
+  linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+  filecolor=$if(filecolor)$$filecolor$$else$Maroon$endif$,
+  citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+  urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
 $else$
-            pdfborder={0 0 0},
+  pdfborder={0 0 0},
 $endif$
-            breaklinks=true}
+  breaklinks=true}
 \urlstyle{same}  % don't use monospace font for urls
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
@@ -206,6 +231,8 @@ $endif$
 $if(listings)$
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}
+\lstset{defaultdialect=[5.3]Lua}
+\lstset{defaultdialect=[x86masm]Assembler}
 $endif$
 $if(lhs)$
 \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
@@ -222,8 +249,9 @@ $if(beamer)$
 \def\fnum@table{\tablename~\thetable}
 \makeatother
 $else$
-% Fix footnotes in tables (requires footnote package)
-\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{longtable}}{}
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 $endif$
 $endif$
 $if(graphics)$
@@ -252,7 +280,7 @@ $endif$
 $if(numbersections)$
 \setcounter{secnumdepth}{$if(secnumdepth)$$secnumdepth$$else$5$endif$}
 $else$
-\setcounter{secnumdepth}{0}
+\setcounter{secnumdepth}{-2}
 $endif$
 $if(beamer)$
 $else$
@@ -260,12 +288,12 @@ $if(subparagraph)$
 $else$
 % Redefines (sub)paragraphs to behave more like sections
 \ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
 $endif$
 $endif$
@@ -282,12 +310,12 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 $if(lang)$
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\ifnum 0\ifxetex 1\fi=0 % if pdftex or luatex
   \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
 $if(babel-newcommands)$
   $babel-newcommands$
 $endif$
-\else
+\else % if xetex
   % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
@@ -324,18 +352,25 @@ $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
 $if(subtitle)$
-\providecommand{\subtitle}[1]{}
+$if(beamer)$
+$else$
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+$endif$
 \subtitle{$subtitle$}
 $endif$
 $if(author)$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 $endif$
-$if(institute)$
-\providecommand{\institute}[1]{}
-\institute{$for(institute)$$institute$$sep$ \and $endfor$}
-$endif$
 \date{$date$}
 $if(beamer)$
+$if(institute)$
+\institute{$for(institute)$$institute$$sep$ \and $endfor$}
+$endif$
 $if(titlegraphic)$
 \titlegraphic{\includegraphics{$titlegraphic$}}
 $endif$
@@ -369,9 +404,9 @@ $endif$
 $if(beamer)$
 \begin{frame}
 $if(toc-title)$
-\frametitle{$toc-title$}
+  \frametitle{$toc-title$}
 $endif$
-\tableofcontents[hideallsubsections]
+  \tableofcontents[hideallsubsections]
 \end{frame}
 $else$
 {
@@ -402,9 +437,9 @@ $endif$
 $endif$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
-\bibliographytrue
+  \bibliographytrue
 $endif$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 $if(beamer)$
 \end{frame}
 $endif$
@@ -414,8 +449,8 @@ $endif$
 $if(biblatex)$
 $if(beamer)$
 \begin{frame}[allowframebreaks]{$biblio-title$}
-\bibliographytrue
-\printbibliography[heading=none]
+  \bibliographytrue
+  \printbibliography[heading=none]
 \end{frame}
 $else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
