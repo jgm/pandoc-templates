@@ -205,6 +205,9 @@ $endif$
 $if(author-meta)$
   pdfauthor={$author-meta$},
 $endif$
+$if(subject)$
+  pdfsubject={$subject$},
+$endif$
 $if(keywords)$
   pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
 $endif$
@@ -381,6 +384,9 @@ $endif$
 
 \begin{document}
 $if(title)$
+$if(book-class)$
+\frontmatter
+$endif$
 $if(beamer)$
 \frame{\titlepage}
 $else$
@@ -424,8 +430,14 @@ $endif$
 $if(lof)$
 \listoffigures
 $endif$
+$if(book-class)$
+\mainmatter
+$endif$
 $body$
 
+$if(book-class)$
+\backmatter
+$endif$
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
