@@ -24,6 +24,16 @@ $endif$
   color=$linkcolor$,
   contrastcolor=$linkcontrastcolor$]
 
+$if(date)$
+\ctxlua{
+local date=utilities.parsers.totime('$date$ 00:00');
+if date then
+	table.merge(tex, date); 
+	context('\\normalmonth='..tex.month);
+end;
+}
+$endif$
+
 % make chapter, section bookmarks visible when opening document
 \placebookmarks[chapter, section, subsection, subsubsection, subsubsubsection, subsubsubsubsection][chapter, section]
 \setupinteractionscreen[option=bookmark]
