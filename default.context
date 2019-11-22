@@ -27,7 +27,6 @@ $endif$
 % make chapter, section bookmarks visible when opening document
 \placebookmarks[chapter, section, subsection, subsubsection, subsubsubsection, subsubsubsubsection][chapter, section]
 \setupinteractionscreen[option=bookmark]
-\setuptagging[state=start]
 
 $if(papersize)$
 \setuppapersize[$for(papersize)$$papersize$$sep$,$endfor$]
@@ -37,14 +36,18 @@ $if(layout)$
 $endif$
 $if(pagenumbering)$
 \setuppagenumbering[$for(pagenumbering)$$pagenumbering$$sep$,$endfor$]
+$else$
+\setuppagenumbering[location={footer,middle}]
 $endif$
 $if(pdfa)$
 % attempt to generate PDF/A
 \setupbackend
-  [format=PDF/A-1b:2005,
-   intent=sRGB IEC61966-2.1,
-   profile=sRGB.icc]
+  [format=PDF/A-$pdfa$,
+   profile={$if(pdfaiccprofile)$$for(pdfaiccprofile)$$pdfaiccprofile$$sep$,$endfor$$else$sRGB.icc$endif$},
+   intent=$if(pdfaintent)$$pdfaintent$$else$sRGB IEC61966-2.1$endif$]
 $endif$
+\setupbackend[export=yes]
+\setupstructure[state=start,method=auto]
 
 % use microtypography
 \definefontfeature[default][default][script=latn, protrusion=quality, expansion=quality, itlc=yes, textitalics=yes, onum=yes, pnum=yes]
@@ -104,6 +107,27 @@ $endif$
 \setupxtable[body][]
 \setupxtable[foot][bottomframe=on]
 
+$if(csl-refs)$
+\newdimen\cslhangindent
+\cslhangindent=1.5em
+\definestartstop [cslreferences] [
+	$if(csl-hanging-indent)$
+	before={%
+		\setupnarrower[left=\cslhangindent]
+    	\startnarrower[left]%
+    	\setupindenting[-\leftskip,yes,first]%
+    	%\setuphead[chapter,section][indentnext=yes]%
+		\indentation%
+  	},
+  	after=\stopnarrower,
+	$endif$
+]
+$endif$
+$if(includesource)$
+$for(sourcefile)$
+\attachment[file=$curdir$/$sourcefile$,method=hidden]
+$endfor$
+$endif$
 $for(header-includes)$
 $header-includes$
 $endfor$
