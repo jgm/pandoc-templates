@@ -14,20 +14,9 @@ $if(keywords)$
   <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
 $endif$
   <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-$if(quotes)$
-      q { quotes: "“" "”" "‘" "’"; }
-$endif$
+  <style>
+    $styles.html()$
   </style>
-$if(highlighting-css)$
-  <style type="text/css">
-$highlighting-css$
-  </style>
-$endif$
 $for(css)$
   <link rel="stylesheet" href="$css$" />
 $endfor$
@@ -60,7 +49,10 @@ $endif$
 </header>
 $endif$
 $if(toc)$
-<nav id="$idprefix$TOC">
+<nav id="$idprefix$TOC" role="doc-toc">
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
 $table-of-contents$
 </nav>
 $endif$

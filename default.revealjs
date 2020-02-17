@@ -16,21 +16,11 @@ $endif$
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="$revealjs-url$/css/reset.css">
   <link rel="stylesheet" href="$revealjs-url$/css/reveal.css">
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-$if(quotes)$
-      q { quotes: "“" "”" "‘" "’"; }
-$endif$
+  <style>
+    $styles.html()$
   </style>
-$if(highlighting-css)$
-  <style type="text/css">
-$highlighting-css$
-  </style>
-$endif$
 $if(theme)$
   <link rel="stylesheet" href="$revealjs-url$/css/theme/$theme$.css" id="theme">
 $else$
@@ -65,7 +55,7 @@ $endfor$
     <div class="slides">
 
 $if(title)$
-<section id="$idprefix$title-slide">
+<section id="$idprefix$title-slide"$for(title-slide-attributes/pairs)$ $it.key$="$it.value$"$endfor$>
   <h1 class="title">$title$</h1>
 $if(subtitle)$
   <p class="subtitle">$subtitle$</p>
@@ -88,7 +78,6 @@ $body$
     </div>
   </div>
 
-  <script src="$revealjs-url$/lib/js/head.min.js"></script>
   <script src="$revealjs-url$/js/reveal.js"></script>
 
   <script>
@@ -137,6 +126,10 @@ $endif$
 $if(rtl)$
         // Change the presentation direction to be RTL
         rtl: $rtl$,
+$endif$
+$if(navigationMode)$
+        // see https://github.com/hakimel/reveal.js/#navigation-mode
+        navigationMode: '$navigationMode$',
 $endif$
 $if(fragments)$
         // Turns fragments on and off globally
@@ -239,6 +232,10 @@ $endif$
 $if(maxScale)$
         maxScale: $maxScale$,
 $endif$
+$if(zoomKey)$
+        // Modifier key used to click-zoom to part of the slide
+        zoomKey: '$zoomKey$',
+$endif$
 $if(mathjax)$
         math: {
           mathjax: '$mathjaxurl$',
@@ -263,7 +260,7 @@ $endif$
           { src: '$revealjs-url$/lib/js/classList.js', condition: function() { return !document.body.classList; } },
           { src: '$revealjs-url$/plugin/zoom-js/zoom.js', async: true },
 $if(notes-server)$
-          { src: '$revealjs-url$/socket.io/socker.io.js', async: true },
+          { src: '$revealjs-url$/socket.io/socket.io.js', async: true },
           { src: '$revealjs-url$/plugin/notes-server/client.js', async: true },
 $endif$
 $if(mathjax)$
