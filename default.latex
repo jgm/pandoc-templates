@@ -218,6 +218,8 @@ $if(verbatim-in-note)$
   \usepackage{fancyvrb}
 $endif$
 
+\usepackage{xcolor}
+
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
