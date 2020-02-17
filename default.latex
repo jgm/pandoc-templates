@@ -4,6 +4,10 @@
 \PassOptionsToPackage{unicode$for(hyperrefoptions)$,$hyperrefoptions$$endfor$}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 
+$if(colorlinks)$
+  \PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+$endif$
+
 % script direction
 $if(dir)$
   $if(latex-dir-rtl)$
