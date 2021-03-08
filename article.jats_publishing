@@ -30,10 +30,10 @@ $if(journal.abbrev-title)$
 $endif$
 </journal-title-group>
 $if(journal.pissn)$
-<issn pub-type="ppub">$journal.pissn$</issn>
+<issn publication-format="print">$journal.pissn$</issn>
 $endif$
 $if(journal.eissn)$
-<issn pub-type="epub">$journal.eissn$</issn>
+<issn publication-format="electronic">$journal.eissn$</issn>
 $endif$
 $-- At least one issn element is required; use empty issn as fallback
 $if(journal.pissn)$
@@ -95,6 +95,8 @@ $if(author.surname)$
 <surname>$author.surname$</surname>
 <given-names>$author.given-names$</given-names>
 </name>
+$elseif(author.name)$
+<string-name>$author.name$</string-name>
 $else$
 <string-name>$author$</string-name>
 $endif$
@@ -128,7 +130,7 @@ $endif$
 </author-notes>
 $endif$
 $if(date)$
-<pub-date pub-type="epub"$if(date.iso-8601)$ iso-8601-date="$date.iso-8601$"$endif$>
+<pub-date date-type="$if(date.type)$$date.type$$else$pub$endif$" publication-format="electronic"$if(date.iso-8601)$ iso-8601-date="$date.iso-8601$"$endif$>
 $if(date.day)$
 <day>$date.day$</day>
 $endif$
