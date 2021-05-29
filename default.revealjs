@@ -52,6 +52,9 @@ $endif$
 $for(author)$
   <p class="author">$author$</p>
 $endfor$
+$for(institute)$
+  <p class="institute">$institute$</p>
+$endfor$
 $if(date)$
   <p class="date">$date$</p>
 $endif$
@@ -59,7 +62,12 @@ $endif$
 $endif$
 $if(toc)$
 <section id="$idprefix$TOC">
+<nav role="doc-toc"> 
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
 $table-of-contents$
+</nav>
 </section>
 $endif$
 
@@ -116,17 +124,17 @@ $if(showSlideNumber)$
         // 'all', 'print', or 'speaker'
         showSlideNumber: '$showSlideNumber$',
 $endif$
-$if(hash)$
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: $hash$,
-$endif$
+        hash: $if(hash)$$hash$$else$true$endif$,
 $if(hashOneBasedIndex)$
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: $hashOneBasedIndex$,
 $endif$
+$if(history)$
         // Push each slide change to the browser history
-        history: $if(history)$$history$$else$true$endif$,
+        history: $history$,
+$endif$
 $if(keyboard)$
         // Enable keyboard shortcuts for navigation
         keyboard: $keyboard$,
