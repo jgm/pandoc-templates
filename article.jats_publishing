@@ -81,12 +81,15 @@ $endif$
 $if(title)$
 <title-group>
 <article-title>$title$</article-title>
+$if(subtitle)$
+<subtitle>${subtitle}</subtitle>
+$endif$
 </title-group>
 $endif$
 $if(author)$
 <contrib-group>
 $for(author)$
-<contrib contrib-type="author"$if(author.equal-contrib)$ equal-contrib="true"$endif$>
+<contrib contrib-type="author"$if(author.equal-contrib)$ equal-contrib="yes"$endif$>
 $if(author.orcid)$
 <contrib-id contrib-id-type="orcid">$author.orcid$</contrib-id>
 $endif$
@@ -103,15 +106,25 @@ $endif$
 $if(author.email)$
 <email>$author.email$</email>
 $endif$
+$-- if affiliations are listed separately, then create links. Otherwise
+$-- include them here.
+$if(affiliation)$
 $for(author.affiliation)$
 <xref ref-type="aff" rid="aff-$author.affiliation$"/>
 $endfor$
+$else$
+$for(author.affiliation)$
+${ it:affiliations.jats() }
+$endfor$
+$endif$
 $if(author.cor-id)$
 <xref ref-type="corresp" rid="cor-$author.cor-id$"><sup>*</sup></xref>
 $endif$
 </contrib>
 $endfor$
-${ affiliations.jats() }
+$for(affiliation)$
+${ it:affiliations.jats() }
+$endfor$
 </contrib-group>
 $endif$
 $if(article.author-notes)$
