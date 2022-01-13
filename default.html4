@@ -46,6 +46,12 @@ $endfor$
 $if(date)$
 <h3 class="date">$date$</h3>
 $endif$
+$if(abstract)$
+<div class="abstract">
+<div class="abstract-title">$abstract-title$</div>
+$abstract$
+</div>
+$endif$
 </div>
 $endif$
 $if(toc)$

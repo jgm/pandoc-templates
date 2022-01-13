@@ -14,6 +14,9 @@ $endif$
 $if(title)$
 <title-group>
 <article-title>$title$</article-title>
+$if(subtitle)$
+<subtitle>${subtitle}</subtitle>
+$endif$
 </title-group>
 $endif$
 $if(author)$
@@ -33,18 +36,17 @@ $elseif(author.name)$
 $else$
 <string-name>$author$</string-name>
 $endif$
+$for(author.affiliation)$
+${ it:affiliations.jats() }
+$endfor$
 $if(author.email)$
 <email>$author.email$</email>
 $endif$
-$for(author.affiliation)$
-<xref ref-type="aff" rid="aff-$author.affiliation$"/>
-$endfor$
 $if(author.cor-id)$
 <xref ref-type="corresp" rid="cor-$author.cor-id$"><sup>*</sup></xref>
 $endif$
 </contrib>
 $endfor$
-${ affiliations.jats() }
 </contrib-group>
 $endif$
 $if(copyright)$
