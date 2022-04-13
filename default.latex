@@ -88,7 +88,9 @@ $else$
 \usepackage{lmodern}
 $endif$
 $if(linestretch)$
-\usepackage{setspace}
+\makeatletter
+\@ifclassloaded{memoir}{}{\usepackage{setspace}}
+\makeatother
 $endif$
 \usepackage{iftex}
 \ifPDFTeX
@@ -197,11 +199,14 @@ $if(indent)$
 $else$
 \makeatletter
 \@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
+  \@ifclassloaded{memoir}{%
     \setlength{\parindent}{0pt}
     \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+  {\IfFileExists{parskip.sty}{%
+      \usepackage{parskip}
+    }{% else
+      \setlength{\parindent}{0pt}
+      \setlength{\parskip}{6pt plus 2pt minus 1pt}}}
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
@@ -439,7 +444,9 @@ $endif$
 
 \begin{document}
 $if(has-frontmatter)$
-\frontmatter
+\makeatletter
+\@ifclassloaded{memoir}{\ifartopt\else\frontmatter\fi}{\frontmatter}
+\makeatother
 $endif$
 $if(title)$
 $if(beamer)$
@@ -475,7 +482,9 @@ $if(colorlinks)$
 \hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$$endif$}
 $endif$
 \setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
+\makeatletter
+\@ifclassloaded{memoir}{\tableofcontents*}{\tableofcontents}
+\makeatother
 }
 $endif$
 $endif$
@@ -486,15 +495,21 @@ $if(lot)$
 \listoftables
 $endif$
 $if(linestretch)$
-\setstretch{$linestretch$}
+\makeatletter
+\@ifclassloaded{memoir}{\setSpacing}{\setstretch}{$linestretch$}
+\makeatother
 $endif$
 $if(has-frontmatter)$
-\mainmatter
+\makeatletter
+\@ifclassloaded{memoir}{\ifartopt\else\mainmatter\fi}{\mainmatter}
+\makeatother
 $endif$
 $body$
 
 $if(has-frontmatter)$
-\backmatter
+\makeatletter
+\@ifclassloaded{memoir}{\ifartopt\else\backmatter\fi}{\backmatter}
+\makeatother
 $endif$
 $if(natbib)$
 $if(bibliography)$
