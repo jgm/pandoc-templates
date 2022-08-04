@@ -89,14 +89,20 @@ $endif$
 $if(author)$
 <contrib-group>
 $for(author)$
-<contrib contrib-type="author"$if(author.equal-contrib)$ equal-contrib="yes"$endif$>
+<contrib contrib-type="author"$if(author.equal-contrib)$ equal-contrib="yes"$endif$$if(author.cor-id)$ corresp="yes"$endif$>
 $if(author.orcid)$
 <contrib-id contrib-id-type="orcid">$author.orcid$</contrib-id>
 $endif$
 $if(author.surname)$
 <name>
-<surname>$author.surname$</surname>
-<given-names>$author.given-names$</given-names>
+<surname>$if(author.non-dropping-particle)$${author.non-dropping-particle} $endif$$author.surname$</surname>
+<given-names>$author.given-names$$if(author.dropping-particle)$ ${author.dropping-particle}$endif$</given-names>
+$if(author.prefix)$
+<prefix>${author.suffix}</prefix>
+$endif$
+$if(author.suffix)$
+<suffix>${author.suffix}</suffix>
+$endif$
 </name>
 $elseif(author.name)$
 <string-name>$author.name$</string-name>
@@ -172,7 +178,6 @@ $if(history)$
 <history>
 </history>
 $endif$
-$if(copyright)$
 <permissions>
 $for(copyright.statement)$
 <copyright-statement>$copyright.statement$</copyright-statement>
@@ -189,12 +194,14 @@ $if(copyright.text)$
 </license>
 $endif$
 $for(license)$
-<license$if(it.type)$ license-type="${it.type}"$endif$$if(it.link)$ xlink:href="${it.link}"$endif$>
+<license$if(it.type)$ license-type="${it.type}"$endif$>
+$if(it.link)$
+<ali:license_ref xmlns:ali="http://www.niso.org/schemas/ali/1.0/">${it.link}</ali:license_ref>
+$endif$
 <license-p>$if(it.text)$${it.text}$else$${it}$endif$</license-p>
 </license>
 $endfor$
 </permissions>
-$endif$
 $if(abstract)$
 <abstract>
 $abstract$
