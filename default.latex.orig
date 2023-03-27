@@ -292,12 +292,7 @@ $if(svg)$
 $endif$
 $if(strikeout)$
 $-- also used for underline
-\ifLuaTeX
-  \usepackage{luacolor}
-  \usepackage[soul]{lua-ul}
-\else
-  \usepackage{soul}
-\fi
+\usepackage{soul}
 $endif$
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
@@ -363,15 +358,15 @@ $if(babel-lang)$
 $if(mainfont)$
 \ifPDFTeX
 \else
-\babelfont[$babel-lang$]{rm}[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+\babelfont[$babel-lang$]{rm}{$mainfont$}
 \fi
 $endif$
 $endif$
 $for(babel-otherlangs)$
 \babelprovide[import]{$babel-otherlangs$}
 $endfor$
-$for(babelfonts/pairs)$
-\babelfont[$babelfonts.key$]{rm}{$babelfonts.value$}
+$for(babelfonts)$
+\babelfont[$babelfonts.language$]{rm}{$babelfonts.font$}
 $endfor$
 % get rid of language-specific shorthands (see #6817):
 \let\LanguageShortHands\languageshorthands
