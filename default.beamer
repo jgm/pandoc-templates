@@ -62,6 +62,7 @@ $endif$
 $for(beameroption)$
 \setbeameroption{$beameroption$}
 $endfor$
+$fonts.latex()$
 $-- Set Beamer theme before user font settings so they can override theme
 $if(theme)$
 \usetheme[$for(themeoptions)$$themeoptions$$sep$,$endfor$]{$theme$}
@@ -98,7 +99,6 @@ $if(section-titles)$
   \frame{\subsectionpage}
 }
 $endif$
-$fonts.latex()$
 $common.latex()$
 $for(header-includes)$
 $header-includes$
