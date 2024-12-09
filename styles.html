@@ -1,4 +1,7 @@
 $if(document-css)$
+:root {
+  color-scheme: light dark;
+}
 html {
 $if(mainfont)$
   font-family: $mainfont$;
@@ -9,8 +12,8 @@ $endif$
 $if(linestretch)$
   line-height: $linestretch$;
 $endif$
-  color: $if(fontcolor)$$fontcolor$$else$#1a1a1a$endif$;
-  background-color: $if(backgroundcolor)$$backgroundcolor$$else$#fdfdfd$endif$;
+  color: $if(fontcolor)$$fontcolor$$else$light-dark(#1a1a1a, #fdfdfd)$endif$;
+  background-color: $if(backgroundcolor)$$backgroundcolor$$else$light-dark(#fdfdfd, #1a1a1a)$endif$;
 }
 body {
   margin: 0 auto;
@@ -54,10 +57,10 @@ p {
   margin: 1em 0;
 }
 a {
-  color: $if(linkcolor)$$linkcolor$$else$#1a1a1a$endif$;
+  color: $if(linkcolor)$$linkcolor$$else$light-dark(#1a1a1a, #fdfdfd)$endif$;
 }
 a:visited {
-  color: $if(linkcolor)$$linkcolor$$else$#1a1a1a$endif$;
+  color: $if(linkcolor)$$linkcolor$$else$light-dark(#1a1a1a, #fdfdfd)$endif$;
 }
 img {
   max-width: 100%;
@@ -130,7 +133,7 @@ pre code {
  overflow: visible;
 }
 hr {
-  background-color: #1a1a1a;
+  background-color: light-dark(#1a1a1a, #fdfdfd);
   border: none;
   height: 1px;
   margin: 1em 0;
